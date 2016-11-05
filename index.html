@@ -128,36 +128,22 @@
             }
 
             function displayStats(stats) {
-                var arrayOfCrime = [];
-                var assocmap = [];
-
                 for (var k in stats) {
                     if (stats.hasOwnProperty(k)) {
-                        arrayOfCrime.push(stats[k]);
+                        var cityCircle = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: map,
+                            center: {
+                                'lat': parseFloat(stats[k].lat),
+                                'lng': parseFloat(stats[k].lon)
+                            },
+                            radius: 50
+                        });
                     }
-                }
-
-                for (var i = 0; i < arrayOfCrime.length; i++) {
-                    var item = arrayOfCrime[i];
-                    assocmap[item.id] = {
-                        'center': {
-                            'lat': parseFloat(item.lat),
-                            'lng': parseFloat(item.lon)
-                        }};
-                }
-                
-                for (var city in assocmap) {
-                    // Add the circle for this city to the map.
-                    var cityCircle = new google.maps.Circle({
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.35,
-                        map: map,
-                        center: assocmap[city].center,
-                        radius: 50
-                    });
                 }
             }
         </script>
