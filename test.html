@@ -123,11 +123,11 @@
             }
 
             function displayStats(stats) {
-                var size = 0;
+                var arrayOfCrime = [];
 
                 for (var k in stats) {
                     if (stats.hasOwnProperty(k)) {
-                        size++;
+                        arrayOfCrime.push(stats[k]);
                     }
                 }
             }
