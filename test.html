@@ -89,16 +89,19 @@
             function getCrimeStats(lat, lng) {
                 var crimeUrl = "https://data.police.uk/api/crimes-street/all-crime?lat=" + lat + "&lng=" + lng + "2&date=2016-08";
                 var stats;
-
-                $.getJSON({
+                
+               $.ajax({
                     url: crimeUrl,
-                    type: "GET",
+                    dataType: 'json',
+                    async: false,
                     success: function (result) {
                         stats = indexCrimeStats(result);
                     }
                 });
 
+                console.log("STATS:");
                 console.log(stats);
+                
                 return stats;
             }
 
@@ -116,14 +119,14 @@
                         streetName: json[i].location.street.name
                     };
                 }
-
+                
                 return crimeData;
             }
 
             function displayStats(stats) {
                 var size = 0;
-                
-                for (var k in stats){
+
+                for (var k in stats) {
                     if (stats.hasOwnProperty(k)) {
                         size++;
                     }
