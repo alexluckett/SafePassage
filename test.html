@@ -78,32 +78,34 @@
 
                     var currentRoute = response.routes[0].overview_path;
 
+                    var stats = [];
                     for (var x = 0; x < currentRoute.length; x++) {
                         var pos = new google.maps.LatLng(currentRoute[x].lat(), currentRoute[x].lng());
                         coords.push(pos);
-                        displayStats(getCrimeStats(currentRoute[x].lat(), currentRoute[x].lng()));
+                        stats = getCrimeStats(currentRoute[x].lat(), currentRoute[x].lng(), stats);
                     }
+                    
+                    displayStats(stats);
                 });
             }
 
-            function getCrimeStats(lat, lng) {
+            function getCrimeStats(lat, lng, existingStats) {
                 var crimeUrl = "https://data.police.uk/api/crimes-street/all-crime?lat=" + lat + "&lng=" + lng + "2&date=2016-08";
-                var stats;
-
-                $.getJSON({
+                
+                $.ajax({
                     url: crimeUrl,
-                    type: "GET",
+                    dataType: 'json',
+                    async: false,
                     success: function (result) {
-                        stats = indexCrimeStats(result);
+                        existingStats = indexCrimeStats(result, existingStats);
                     }
                 });
-
-                console.log(stats);
-                return stats;
+                
+                return existingStats;
             }
 
-            function indexCrimeStats(json) {
-                var crimeData = [];
+            function indexCrimeStats(json, existingStats) {
+                var crimeData = existingStats;
 
                 for (var i = 0; i < json.length; i++) {
                     var id = json[i].id;
@@ -116,14 +118,14 @@
                         streetName: json[i].location.street.name
                     };
                 }
-
+                
                 return crimeData;
             }
 
             function displayStats(stats) {
                 var size = 0;
-                
-                for (var k in stats){
+
+                for (var k in stats) {
                     if (stats.hasOwnProperty(k)) {
                         size++;
                     }
