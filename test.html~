@@ -156,7 +156,7 @@ console.log(assocmap[city]);
             fillOpacity: 0.35,
             map: map,
             center: assocmap[city].center,
-            radius: 50
+            radius: 800
           });
         }
 	}
