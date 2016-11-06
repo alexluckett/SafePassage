@@ -22,8 +22,9 @@ function initMap() {
 
 	
     
-    document.getElementById('start').addEventListener('change', onChangeHandler);
-    document.getElementById('end').addEventListener('change', onChangeHandler);
+    //document.getElementById('start').addEventListener('change', onChangeHandler);
+    //document.getElementById('end').addEventListener('change', onChangeHandler);
+    document.getElementById("clicky").addEventListener('click', onChangeHandler);
 }
 
 function toggleHeatmap() {
