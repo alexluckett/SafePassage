@@ -28,7 +28,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         directionsDisplay.setDirections(response);
 
         $.ajax({
-            url: "http://localhost/api.php",
+            url: "api.php",
             dataType: 'json',
             async: false,
             type: 'POST',
