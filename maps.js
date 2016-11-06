@@ -14,6 +14,7 @@ function initMap() {
     var onChangeHandler = function () {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     };
+    
     document.getElementById('start').addEventListener('change', onChangeHandler);
     document.getElementById('end').addEventListener('change', onChangeHandler);
 }
@@ -26,24 +27,15 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     }, function (response, status) {
         directionsDisplay.setDirections(response);
 
-        var coords = [];
-
-        var currentRoute = response.routes[0].overview_path;
-
-        var coords = [];
-        for (var x = 0; x < currentRoute.length; x++) {
-            var lat = currentRoute[x].lat();
-            var lon = currentRoute[x].lng();
-            coords.push({'lat': lat,
-                'lng': lon});
-        }
-
         $.ajax({
             url: "http://localhost/api.php",
             dataType: 'json',
             async: false,
             type: 'POST',
-            data: JSON.stringify(coords),
+            data: {
+                postcodeStart: document.getElementById('start').value,
+                postcodeEnd: document.getElementById('end').value
+            },
             success: function (result) {
                 displayStats(result);
             }

@@ -53,11 +53,43 @@ function indexCrimeStats($json, $existingStats) {
     return $crimeData;
 }
 
-$entityBody = file_get_contents('php://input');
-$inputCoords = json_decode($entityBody, true);
+function retrievJson($postcodeStart, $postcodeEnd){
+  $json = file_get_contents('https://maps.googleapis.com/maps/api/directions/json?origin='. $postcodeStart .'&destination=' . $postcodeEnd . '&key=AIzaSyBvxMW1WgYO6sGw_HQpENPeQNylG5EAXl0');
+    
+  $data = json_decode($json,true);
+  return $data;
+}
+
+function GetJourneyPoints($postcodeStart, $postcodeEnd){
+  /* input orgin and destination latitudes and logitudes - AS STRINGS. Returns an array, each element
+  of which holds a latitude and logitude of a point along the route.*/
+
+  $data = retrievJson($postcodeStart, $postcodeEnd);
+
+  $distanceTraveled = 0;
+  $latLongPointsArray = array();
+
+  foreach($data['routes'][0]['legs'][0]['steps'] as $step){
+    $distanceTraveled += (int)$step['distance']['value'];
+
+    if($distanceTraveled >= 200){
+      $LongLatPoint = array(
+          'lat' => $step['start_location']['lat'], 
+          'lng' => $step['start_location']['lng']
+        );
+      
+      array_push($latLongPointsArray, $LongLatPoint);
+
+      $distanceTraveled = 0;
+    }
+  }
+    return $latLongPointsArray;
+}
+
+$journeyPoints = GetJourneyPoints($_REQUEST['postcodeStart'], $_REQUEST['postcodeEnd']);
 
 $existingStats = [];
-foreach($inputCoords as $item) {
+foreach($journeyPoints as $item) {
     $existingStats = getCrimeStats($item['lat'], $item['lng'], $existingStats);
 }
 
