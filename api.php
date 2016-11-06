@@ -1,5 +1,6 @@
 <?php
 
+/* represents a data item for crime. unique by id. plot on map using lat and lng. */
 class CrimeDataItem {
     public $id;
     public $category;
@@ -22,6 +23,9 @@ class CrimeDataItem {
     }
 }
 
+/* get stats for crime, 1 mile around a latitude and longitude. return appended to $existingStats 
+ * which allows filtering duplicates (via the ID property).
+ */
 function getCrimeStats($lat, $lng, $existingStats) {
     $crimeUrl = "https://data.police.uk/api/crimes-street/all-crime?lat=$lat&lng=$lng&date=2016-08";
     
@@ -34,6 +38,7 @@ function getCrimeStats($lat, $lng, $existingStats) {
     return $newStats;  
 }
 
+/* Get only relevant info from dataset - strip out all else. */
 function indexCrimeStats($json, $existingStats) {
     $crimeData = $existingStats;
     
@@ -60,6 +65,12 @@ function retrievJson($postcodeStart, $postcodeEnd){
   return $data;
 }
 
+/**
+ * Get points along a route from the google maps API, separated by each 200 metres.
+ * @param type $postcodeStart
+ * @param type $postcodeEnd
+ * @return arrayGets
+ */
 function GetJourneyPoints($postcodeStart, $postcodeEnd){
   /* input orgin and destination latitudes and logitudes - AS STRINGS. Returns an array, each element
   of which holds a latitude and logitude of a point along the route.*/
@@ -86,6 +97,7 @@ function GetJourneyPoints($postcodeStart, $postcodeEnd){
     return $latLongPointsArray;
 }
 
+/* take in start and stop postcode, return local crime stats for the route in JSON format */
 $journeyPoints = GetJourneyPoints($_REQUEST['postcodeStart'], $_REQUEST['postcodeEnd']);
 
 $existingStats = [];
