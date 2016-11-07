@@ -59,7 +59,7 @@ function indexCrimeStats($json, $existingStats) {
 }
 
 function retrievJson($postcodeStart, $postcodeEnd){
-  $json = file_get_contents('https://maps.googleapis.com/maps/api/directions/json?origin='. $postcodeStart .'&destination=' . $postcodeEnd . '&key=AIzaSyBvxMW1WgYO6sGw_HQpENPeQNylG5EAXl0');
+  $json = file_get_contents('https://maps.googleapis.com/maps/api/directions/json?origin='. $postcodeStart .'&destination=' . $postcodeEnd . '&key=AIzaSyC3rRDWDwU5_ge5IhlmqoOjjnNyGsRzpeY');
     
   $data = json_decode($json,true);
   return $data;
