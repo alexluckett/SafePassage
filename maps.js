@@ -62,7 +62,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             url: "api.php",
             dataType: 'json',
             async: false,
-            type: 'POST',
+            type: 'GET',
             data: {
                 postcodeStart: document.getElementById('start').value,
                 postcodeEnd: document.getElementById('end').value
