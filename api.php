@@ -60,7 +60,7 @@ function indexCrimeStats($json, $existingStats) {
 }
 
 function retrievJson($postcodeStart, $postcodeEnd){
-  $json = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=$postcodeStart&destination=$postcodeEnd&key=".API_KEY);
+  $json = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=$postcodeStart&destination=$postcodeEnd&key=".SERVER_API_KEY);
     
   $data = json_decode($json,true);
   return $data;

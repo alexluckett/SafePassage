@@ -46,7 +46,7 @@ require 'config.php';
         <script type="text/javascript" src="maps.js"></script>
         
         <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=<?=API_KEY?>&callback=initMap&libraries=visualization">
+                src="https://maps.googleapis.com/maps/api/js?key=<?=CLIENT_API_KEY?>&callback=initMap&libraries=visualization">
         </script>
     </body>
 </html>
