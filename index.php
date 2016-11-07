@@ -1,5 +1,8 @@
 <!-- basic document taken from google api documentation and then adapted. not really much here
      aside from the frame for the map - everything else is in maps.js and api.php -->
+<?php
+require 'config.php';
+?>
 
 <!DOCTYPE html>
 <html>
@@ -43,7 +46,7 @@
         <script type="text/javascript" src="maps.js"></script>
         
         <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3rRDWDwU5_ge5IhlmqoOjjnNyGsRzpeY&callback=initMap&libraries=visualization">
+                src="https://maps.googleapis.com/maps/api/js?key=<?=API_KEY?>&callback=initMap&libraries=visualization">
         </script>
     </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+require 'config.php';
 
 /* represents a data item for crime. unique by id. plot on map using lat and lng. */
 class CrimeDataItem {
@@ -59,7 +60,7 @@ function indexCrimeStats($json, $existingStats) {
 }
 
 function retrievJson($postcodeStart, $postcodeEnd){
-  $json = file_get_contents('https://maps.googleapis.com/maps/api/directions/json?origin='. $postcodeStart .'&destination=' . $postcodeEnd . '&key=AIzaSyC3rRDWDwU5_ge5IhlmqoOjjnNyGsRzpeY');
+  $json = file_get_contents("https://maps.googleapis.com/maps/api/directions/json?origin=$postcodeStart&destination=$postcodeEnd&key=".API_KEY);
     
   $data = json_decode($json,true);
   return $data;
@@ -82,8 +83,9 @@ function GetJourneyPoints($postcodeStart, $postcodeEnd){
 
   foreach($data['routes'][0]['legs'][0]['steps'] as $step){
     $distanceTraveled += (int)$step['distance']['value'];
-
-    if($distanceTraveled >= 200){
+    // sets distance between requests to data.gov.uk
+    $metersPerCrimeDataRequest = 200;
+    if($distanceTraveled >= $metersPerCrimeDataRequest){
       $LongLatPoint = array(
           'lat' => $step['start_location']['lat'], 
           'lng' => $step['start_location']['lng']
