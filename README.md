@@ -4,6 +4,7 @@ Plots recent UK crime location over a travel route on Google Maps.
 
 # API
 Usage: ```api.php?postcodeStart=FOO&postcodeEnd=BAR```
+
 Change FOO and BAR to valid UK postcodes.
 
 Returns a JSON document containing a list of recent crime events within a mile radius of the calculated route between postcodeStart and postcodeEnd. Crime stats are for the previous month only.
