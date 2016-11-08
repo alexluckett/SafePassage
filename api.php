@@ -1,6 +1,14 @@
 <?php
 require 'config.php';
 
+/*
+API USAGE: api.php?postcodeStart=FOO&postcodeEnd=BAR
+Change FOO and BAR to valid UK postcodes.
+
+API return a JSON document containing the list of crime events within a mile radius
+of the calculated route between postcodeStart and postcodeEnd.
+*/
+
 /* represents a data item for crime. unique by id. plot on map using lat and lng. */
 class CrimeDataItem {
     public $id;
